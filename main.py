@@ -1,18 +1,27 @@
-# This is a sample Python script.
+import json
+import pandas as pd
+import os
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-#COLLIDEHACKATHON TEAM #305
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+cwd = os.getcwd()
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('COLLIDE HACKATHON TEAM 305')
+json_files = [file for file in os.listdir(cwd) if file.endswith('.json')]
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+df_dict = {}
+
+
+for json_file in json_files:
+    with open(json_file, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        # Extract the key (title) from the JSON file
+        key = list(data.keys())[0]
+        df = pd.DataFrame(data[key])
+        df.set_index('id', inplace=True)
+        df_dict[key] = df
+
+df_comments = df_dict.get('comments', pd.DataFrame())
+df_dislikes = df_dict.get('dislikes', pd.DataFrame())
+df_likes = df_dict.get('likes',pd.DataFrame())
+df_posts = df_dict.get('posts',pd.DataFrame())
+df_users = df_dict.get('users',pd.DataFrame())
