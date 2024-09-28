@@ -1,27 +1,18 @@
-import json
-import pandas as pd
-import os
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-cwd = os.getcwd()
+# Set up Flask
+app = Flask(__name__)
 
+# Set up Flask to bypass CORS
+cors = CORS(app)
 
-json_files = [file for file in os.listdir(cwd) if file.endswith('.json')]
+# Create the receiver API POST endpoint
+@app.route("/receiver", methods=["POST"])
+def postME():
+   data = request.get_json()
+   data = jsonify(data)
+   return data
 
-
-df_dict = {}
-
-
-for json_file in json_files:
-    with open(json_file, 'r', encoding='utf-8') as file:
-        data = json.load(file)
-        # Extract the key (title) from the JSON file
-        key = list(data.keys())[0]
-        df = pd.DataFrame(data[key])
-        df.set_index('id', inplace=True)
-        df_dict[key] = df
-
-df_comments = df_dict.get('comments', pd.DataFrame())
-df_dislikes = df_dict.get('dislikes', pd.DataFrame())
-df_likes = df_dict.get('likes',pd.DataFrame())
-df_posts = df_dict.get('posts',pd.DataFrame())
-df_users = df_dict.get('users',pd.DataFrame())
+if __name__ == "__main__":
+   app.run(debug=True)
