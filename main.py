@@ -5,15 +5,12 @@ from flask_cors import CORS
 import openai
 
 load_dotenv()
-# Set your OpenAI API key
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-# Set up Flask
 app = Flask(__name__)
 cors = CORS(app)
 
-# OpenAI function to generate blurb with or without user text, and update for comments and posts added
-# OpenAI function to generate blurb with or without user text
+#OpenAI function to generate user summary
 def generate_blurb(user):
     if user.get('usertext'):  # Check if user has posts/comments
         prompt = (
@@ -34,7 +31,7 @@ def generate_blurb(user):
         )
 
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # or "gpt-4" if you have access
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": prompt}
