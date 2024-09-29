@@ -12,16 +12,23 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 app = Flask(__name__)
 cors = CORS(app)
 
-# OpenAI function to generate blurb about each user, including added users
+# OpenAI function to generate blurb with or without user text
 def generate_blurb(user):
-    prompt = (f"Create a short description for a user: "
-              f"ID: {user['id']}, "
-              f"Company: {user['Company']}, "
-              f"Department: {user['Department']}, "
-              f"Seniority: {user['Seniority']}, "
-              f"Role Start Date: {user['role_start_at']}, "
-              f"State: {user['State']}, "
-              f"City: {user['City']}.")
+    if user.get('usertext'):  # Check if user has posts/comments
+        prompt = (
+            f"Write a brief, natural language description of this user, incorporating their profile information and their posts/comments.\n"
+            f"The user works at {user['Company']} in the {user['Department']} department. They hold a {user['Seniority']} position, "
+            f"and they started their role on {user['role_start_at']}. They are based in {user['City']}, {user['State']}.\n"
+            f"Here are some posts/comments the user has made: \"{user['usertext']}\"\n"
+            f"Please summarize their background and contributions."
+        )
+    else:
+        prompt = (
+            f"Write a brief, natural language description of this user based only on their profile information.\n"
+            f"The user works at {user['Company']} in the {user['Department']} department. They hold a {user['Seniority']} position, "
+            f"and they started their role on {user['role_start_at']}. They are based in {user['City']}, {user['State']}.\n"
+            f"Please summarize their background."
+        )
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",  # or "gpt-4" if you have access

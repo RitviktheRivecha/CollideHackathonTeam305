@@ -1,10 +1,10 @@
 let users = [
   { id: "3442", Company: "LLN Energy", Department: "Business Development/Sales",
-    Seniority: "Director/Management/Partner", role_start_at: "2024-04-01", State: "CA", City: "La Habra" },
+    Seniority: "Director/Management/Partner", role_start_at: "2024-04-01", State: "CA", City: "La Habra", usertext: "Most californians aren't fond of oil drilling, which is why I hope to change their negative perception through social media outreach" },
   { id: "3445", Company: "AlphaSense", Department: "Business Development/Sales",
-    Seniority: "Director/Management/Partner", role_start_at: "2023-11-01", State: "CO", City: "Evergreen" },
+    Seniority: "Director/Management/Partner", role_start_at: "2023-11-01", State: "CO", City: "Evergreen", usertext: "I am proud to announce a new project working with the state government of Colorado to develop eco friendly energy solutions!" },
   { id: "3446", Company: "Arnold Operating, LLC", Department: "Engineering",
-    Seniority: "C-suite/VP/Owner", role_start_at: "2024-05-01", State: "TX", City: "Tyler" }
+    Seniority: "C-suite/VP/Owner", role_start_at: "2024-05-01", State: "TX", City: "Tyler", usertext: "There was a 5.1 earthquake yesterday in Martin County, and it got me thinking. I wonder if anyone has done any study of quakes effecting well production? If it’s sensible on surface I caint imagine the effects down hole, if the permeability would shift in the zones where the well is producing from? " }
 ];
 
 // Function to create links for each user
@@ -57,6 +57,11 @@ function displayUserDescription(userId) {
         const paragraph = document.createElement("p");
         paragraph.textContent = blurbs[0]; // Display the blurb for the user
         userDescriptionDiv.appendChild(paragraph);
+
+        // Display the user's posts/comments text
+        const userText = document.createElement("p");
+        userText.textContent = `User's Posts/Comments: ${user.usertext}`;
+        userDescriptionDiv.appendChild(userText);
       }).catch(err => console.error(err));
   }
 }
@@ -79,13 +84,14 @@ function addUser() {
     Seniority: document.getElementById("seniority").value,
     role_start_at: document.getElementById("role_start_at").value,
     State: document.getElementById("state").value,
-    City: document.getElementById("city").value
+    City: document.getElementById("city").value,
+    usertext: document.getElementById("usertext").value // Capture user's text input
   };
 
   // Add the new user to the users array
   users.push(newUser);
 
-  // Regenerate the user links with the new user
+  // Regenerate the user links with the newly added user
   generateUserLinks();
 
   // Clear the form
