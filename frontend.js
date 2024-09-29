@@ -85,7 +85,7 @@ function addUser() {
   // Add the new user to the users array
   users.push(newUser);
 
-  // Regenerate the user links with the newly added user
+  // Regenerate the user links with the new user
   generateUserLinks();
 
   // Clear the form
