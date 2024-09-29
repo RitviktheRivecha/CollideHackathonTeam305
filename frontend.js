@@ -2,6 +2,7 @@
 const button = document.getElementById("theButton");
 const data = document.getElementById("info");
 
+//example
 const cars = [
  { "make":"Porsche", "model":"911S" },
  { "make":"Mercedes-Benz", "model":"220SE" },

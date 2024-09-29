@@ -1,10 +1,14 @@
 import os
 from flask import Flask, request, jsonify
+from dotenv import load_dotenv
 from flask_cors import CORS
 import openai
 
+print(os.getenv('OPENAI_API_KEY'))
+
+load_dotenv(dotenv_path="APIkey.env")
 # Set your OpenAI API key
-openai.api_key = os.getenv('OPENAI_API_KEY') or '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'
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Use the ChatCompletion endpoint for newer models
 response = openai.ChatCompletion.create(
