@@ -6,7 +6,7 @@ import openai
 
 load_dotenv()
 # Set your OpenAI API key
-openai.api_key = os.getenv('OPENAI_API_KEY')
+openai.api_key = os.getenv('OPENAI_API_KEY') #change for later
 
 # Use the ChatCompletion endpoint for newer models
 response = openai.ChatCompletion.create(
