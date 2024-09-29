@@ -1,3 +1,5 @@
+//probably final
+
 let users = [
   { id: "3442", Company: "LLN Energy", Department: "Business Development/Sales",
     Seniority: "Director/Management/Partner", role_start_at: "2024-04-01", State: "CA", City: "La Habra", usertext: "Most Californians aren't fond of oil drilling, which is why I hope to change their negative perception through social media outreach" },
