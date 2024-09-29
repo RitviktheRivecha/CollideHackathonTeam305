@@ -37,9 +37,36 @@ let userdata = Object.keys(users[0]);
 generateTable(table, users);
 generateTableHead(table, userdata);
 
-// Add new user data from form
+// Function to generate blurbs for users
+function generateBlurbs() {
+  fetch("http://127.0.0.1:5000/receiver", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(users) // Send users data
+  }).then(res => res.json())
+    .then(blurbs => {
+      // Display generated blurbs
+      const info = document.getElementById("info");
+      info.innerHTML = ""; // Clear previous content
+      blurbs.forEach(blurb => {
+        const paragraph = document.createElement("p");
+        paragraph.textContent = blurb;
+        info.appendChild(paragraph);
+      });
+    }).catch(err => console.error(err));
+}
+
+// Generate blurbs for existing users on page load
+window.onload = function() {
+  generateBlurbs();
+}
+
+// Add new user data and generate a blurb for them
 document.getElementById("addUserButton").onclick = function() {
-  console.log("button clicked")
+  // Capture new user data from the form
   let newUser = {
     id: document.getElementById("id").value,
     Company: document.getElementById("company").value,
@@ -49,13 +76,16 @@ document.getElementById("addUserButton").onclick = function() {
     State: document.getElementById("state").value,
     City: document.getElementById("city").value
   };
-  console.log(newUser);
-    // Add new user to users array
+
+  // Add new user to the users array
   users.push(newUser);
 
-  // Regenerate the table with updated data
+  // Regenerate the user table with the new user added
   generateTable(table, users);
 
-  // Optionally, clear form fields after submission
+  // Send updated users data and generate blurbs
+  generateBlurbs();
+
+  // Optionally, clear the form fields after submission
   document.getElementById("userForm").reset();
 };
