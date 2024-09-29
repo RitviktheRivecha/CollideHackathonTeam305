@@ -12,7 +12,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 app = Flask(__name__)
 cors = CORS(app)
 
-# OpenAI function to generate blurb with or without user text
+# OpenAI function to generate blurb with or without user text, and update for comments and posts added
 def generate_blurb(user):
     if user.get('usertext'):  # Check if user has posts/comments
         prompt = (

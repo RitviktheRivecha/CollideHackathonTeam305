@@ -1,10 +1,10 @@
 let users = [
   { id: "3442", Company: "LLN Energy", Department: "Business Development/Sales",
-    Seniority: "Director/Management/Partner", role_start_at: "2024-04-01", State: "CA", City: "La Habra", usertext: "Most californians aren't fond of oil drilling, which is why I hope to change their negative perception through social media outreach" },
+    Seniority: "Director/Management/Partner", role_start_at: "2024-04-01", State: "CA", City: "La Habra", usertext: "Most Californians aren't fond of oil drilling, which is why I hope to change their negative perception through social media outreach" },
   { id: "3445", Company: "AlphaSense", Department: "Business Development/Sales",
-    Seniority: "Director/Management/Partner", role_start_at: "2023-11-01", State: "CO", City: "Evergreen", usertext: "I am proud to announce a new project working with the state government of Colorado to develop eco friendly energy solutions!" },
+    Seniority: "Director/Management/Partner", role_start_at: "2023-11-01", State: "CO", City: "Evergreen", usertext: "I am proud to announce a new project working with the state government of Colorado to develop eco-friendly energy solutions!" },
   { id: "3446", Company: "Arnold Operating, LLC", Department: "Engineering",
-    Seniority: "C-suite/VP/Owner", role_start_at: "2024-05-01", State: "TX", City: "Tyler", usertext: "There was a 5.1 earthquake yesterday in Martin County, and it got me thinking. I wonder if anyone has done any study of quakes effecting well production? If it’s sensible on surface I caint imagine the effects down hole, if the permeability would shift in the zones where the well is producing from? " }
+    Seniority: "C-suite/VP/Owner", role_start_at: "2024-05-01", State: "TX", City: "Tyler", usertext: "There was a 5.1 earthquake yesterday in Martin County, and it got me thinking. I wonder if anyone has done any study of quakes affecting well production?" }
 ];
 
 // Function to create links for each user
@@ -40,28 +40,50 @@ function displayUserDescription(userId) {
     // Show the user description section
     document.getElementById("userDescriptionSection").style.display = "block";
 
-    // Send a request to generate a blurb for the clicked user
+    // Send a request to generate a blurb for the user on the first visit
     fetch("http://127.0.0.1:5000/receiver", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify([user]) // Send only the selected user
+      body: JSON.stringify([user])  // Send the user data
     }).then(res => res.json())
       .then(blurbs => {
         const userDescriptionDiv = document.getElementById("userDescription");
-        userDescriptionDiv.innerHTML = ""; // Clear previous content
+        userDescriptionDiv.innerHTML = `
+          <p>${blurbs[0]}</p>
+          <p>User's Posts/Comments: ${user.usertext || "No posts or comments yet."}</p>
+          <textarea id="newComment" placeholder="Add a post/comment"></textarea><br>
+          <button id="addCommentButton">Add Post/Comment</button>
+        `;
 
-        // Create a paragraph for the blurb
-        const paragraph = document.createElement("p");
-        paragraph.textContent = blurbs[0]; // Display the blurb for the user
-        userDescriptionDiv.appendChild(paragraph);
+        // Event listener for the Add Comment button
+        document.getElementById("addCommentButton").onclick = function () {
+          const newComment = document.getElementById("newComment").value;
+          if (newComment) {
+            // Append the new comment to the user's existing text
+            user.usertext = user.usertext ? user.usertext + " " + newComment : newComment;
 
-        // Display the user's posts/comments text
-        const userText = document.createElement("p");
-        userText.textContent = `User's Posts/Comments: ${user.usertext}`;
-        userDescriptionDiv.appendChild(userText);
+            // Regenerate the blurb based on the updated user profile and text
+            fetch("http://127.0.0.1:5000/receiver", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify([user])  // Send the updated user data to the backend
+            }).then(res => res.json())
+              .then(blurbs => {
+                userDescriptionDiv.innerHTML = `
+                  <p>${blurbs[0]}</p>
+                  <p>User's Posts/Comments: ${user.usertext}</p>
+                  <textarea id="newComment" placeholder="Add another post/comment"></textarea><br>
+                  <button id="addCommentButton">Add Post/Comment</button>
+                `;
+              }).catch(err => console.error(err));
+          }
+        };
       }).catch(err => console.error(err));
   }
 }
