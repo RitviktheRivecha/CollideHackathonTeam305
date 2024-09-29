@@ -3,7 +3,6 @@ from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 from flask_cors import CORS
 import openai
-
 load_dotenv()
 # Set your OpenAI API key
 openai.api_key = os.getenv('OPENAI_API_KEY')
