@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>User Data</title>
-  </head>
-  <body>
-    <button id="theButton">Fetch User Data</button>
-    <table>
-      <thead></thead>
-      <tbody></tbody>
-    </table>
-    <script src="frontend.js"></script>
-  </body>
+<head>
+  <title>User Data</title>
+</head>
+<body>
+  <h2>Enter User Data</h2>
+  <form id="userForm">
+    <label for="id">ID:</label><br>
+    <input type="text" id="id" name="id"><br>
+    <label for="company">Company:</label><br>
+    <input type="text" id="company" name="company"><br>
+    <label for="department">Department:</label><br>
+    <input type="text" id="department" name="department"><br>
+    <label for="seniority">Seniority:</label><br>
+    <input type="text" id="seniority" name="seniority"><br>
+    <label for="role_start_at">Role Start At:</label><br>
+    <input type="date" id="role_start_at" name="role_start_at"><br>
+    <label for="state">State:</label><br>
+    <input type="text" id="state" name="state"><br>
+    <label for="city">City:</label><br>
+    <input type="text" id="city" name="city"><br><br>
+    <button type="button" id="addUserButton">Add User</button>
+  </form>
+
+  <h2>User Table</h2>
+  <table>
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="frontend.js"></script>
+</body>
 </html>

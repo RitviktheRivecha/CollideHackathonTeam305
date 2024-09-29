@@ -8,7 +8,7 @@ load_dotenv()
 # Set your OpenAI API key
 openai.api_key = os.getenv('OPENAI_API_KEY') #change for later
 
-# Use the ChatCompletion endpoint for newer models
+# Use the ChatCompletion endpoint for newer models, updated models
 response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",  # You can replace this with "gpt-4" if you have access
     messages=[

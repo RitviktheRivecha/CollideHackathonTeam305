@@ -1,7 +1,3 @@
-// Get the button and container from HTML
-const button = document.getElementById("theButton");
-
-// Example user data
 let users = [
   { id: "3442", Company: "LLN Energy", Department: "Business Development/Sales",
     Seniority: "Director/Management/Partner", role_start_at: "2024-04-01", State: "CA", City: "La Habra" },
@@ -24,6 +20,7 @@ function generateTableHead(table, data) {
 
 function generateTable(table, data) {
   let tbody = table.querySelector('tbody');
+  tbody.innerHTML = ""; // Clear previous data before adding new rows
   for (let element of data) {
     let row = tbody.insertRow();
     for (let key in element) {
@@ -34,29 +31,31 @@ function generateTable(table, data) {
   }
 }
 
+// Initial table generation
 let table = document.querySelector("table");
 let userdata = Object.keys(users[0]);
-
 generateTable(table, users);
 generateTableHead(table, userdata);
 
-// Optional: Fetching the data and displaying it on button click
-button.onclick = function() {
-  // Example: Sending data to the Flask API via fetch
-  fetch("http://127.0.0.1:5000/receiver", {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify(users)
-  }).then(res => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      alert("Something is wrong");
-    }
-  }).then(jsonResponse => {
-    console.log(jsonResponse); // Handle response here
-  }).catch(err => console.error(err));
+// Add new user data from form
+document.getElementById("addUserButton").onclick = function() {
+  console.log("button clicked")
+  let newUser = {
+    id: document.getElementById("id").value,
+    Company: document.getElementById("company").value,
+    Department: document.getElementById("department").value,
+    Seniority: document.getElementById("seniority").value,
+    role_start_at: document.getElementById("role_start_at").value,
+    State: document.getElementById("state").value,
+    City: document.getElementById("city").value
+  };
+  console.log(newUser);
+    // Add new user to users array
+  users.push(newUser);
+
+  // Regenerate the table with updated data
+  generateTable(table, users);
+
+  // Optionally, clear form fields after submission
+  document.getElementById("userForm").reset();
 };
