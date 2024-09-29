@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>User Data and Descriptions</title>
+  <title>User Descriptions</title>
 </head>
 <body>
-  <h2>Enter User Data</h2>
-  <form id="userForm">
-    <label for="id">ID:</label><br>
-    <input type="text" id="id" name="id"><br>
-    <label for="company">Company:</label><br>
-    <input type="text" id="company" name="company"><br>
-    <label for="department">Department:</label><br>
-    <input type="text" id="department" name="department"><br>
-    <label for="seniority">Seniority:</label><br>
-    <input type="text" id="seniority" name="seniority"><br>
-    <label for="role_start_at">Role Start At:</label><br>
-    <input type="date" id="role_start_at" name="role_start_at"><br>
-    <label for="state">State:</label><br>
-    <input type="text" id="state" name="state"><br>
-    <label for="city">City:</label><br>
-    <input type="text" id="city" name="city"><br><br>
-    <button type="button" id="addUserButton">Add User</button>
-  </form>
 
-  <h2>User Information Table</h2>
-  <table>
-    <thead></thead>
-    <tbody></tbody>
-  </table>
+  <!-- Main page section with user form and links -->
+  <div id="mainPage">
+    <h2>Enter User Data</h2>
+    <form id="userForm">
+      <label for="id">ID:</label><br>
+      <input type="text" id="id" name="id"><br>
+      <label for="company">Company:</label><br>
+      <input type="text" id="company" name="company"><br>
+      <label for="department">Department:</label><br>
+      <input type="text" id="department" name="department"><br>
+      <label for="seniority">Seniority:</label><br>
+      <input type="text" id="seniority" name="seniority"><br>
+      <label for="role_start_at">Role Start At:</label><br>
+      <input type="date" id="role_start_at" name="role_start_at"><br>
+      <label for="state">State:</label><br>
+      <input type="text" id="state" name="state"><br>
+      <label for="city">City:</label><br>
+      <input type="text" id="city" name="city"><br><br>
+      <button type="button" id="addUserButton">Add User</button>
+    </form>
 
-  <h2>Generated User Descriptions</h2>
-  <div id="info">
-    <!-- The user blurbs will be displayed here -->
+    <h2>User Links</h2>
+    <div id="userLinks">
+      <!-- Links to user pages will be displayed here -->
+    </div>
+  </div>
+
+  <!-- Section to display the user description -->
+  <div id="userDescriptionSection" style="display: none;">
+    <h2>User Description</h2>
+    <div id="userDescription">
+      <!-- User description will be displayed here -->
+    </div>
+    <button id="backButton">Back</button>
   </div>
 
   <script src="frontend.js"></script>

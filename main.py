@@ -12,7 +12,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 app = Flask(__name__)
 cors = CORS(app)
 
-# OpenAI function to generate blurb about each user
+# OpenAI function to generate blurb about each user, including
 def generate_blurb(user):
     prompt = (f"Create a short description for a user: "
               f"ID: {user['id']}, "
